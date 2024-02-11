@@ -26,19 +26,19 @@ const ProductsProvider = ({ children }) => {
   const downloadProductsData = () => {
     // Format the data into a CSV string
     const csvData = [
-      'productName,brandName,productDescription,productPrice,availability,stocks,category,subcategory,offeredPrice,offerName',
+      'productName,brandName,productDescription,productPrice,stocks,category,subcategory,offeredPrice,offerName',
       ...products.map(product => (
-        `${product.productName},${product.brandName},${product.productDescription},${product.productPrice},${product.availability},${product.stocks},${product.category},${product.subcategory},${product.offeredPrice},${product.offerName}`
+        `"${product.productName}","${product.brandName}","${product.productDescription}","${product.productPrice}","${product.stocks}","${product.category}","${product.subcategory}","${product.offeredPrice}","${product.offerName}"`
       )),
     ].join('\n');
-
+  
     // Create a Blob with the CSV data
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-
+  
     // Use file-saver to trigger the download
     saveAs(blob, 'products_data.csv');
   };
-
+  
   return (
     <ProductsContext.Provider value={{ products, calculateTotalProducts, downloadProductsData }}>
       {children}

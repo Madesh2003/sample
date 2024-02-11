@@ -25,6 +25,11 @@ APP_SERVER.use('/user',require('./Controllers/AuthenticationControllers'));
 APP_SERVER.use('/product',require("./Controllers/ProductController"))
 
 
+APP_SERVER.use('/event', require('./Controllers/EventController'))
+
+APP_SERVER.use('/api',require('./Controllers/ProductUpdatecontroller'))
+
+
 APP_SERVER.all("/", (req, res, next) => {
     res.status(200).json({
         message: "server is working"

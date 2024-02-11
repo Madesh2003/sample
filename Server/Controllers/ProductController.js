@@ -1,6 +1,6 @@
 const AuthorizationShield = require("../Middleware/AuthorizationShield");
 const TokenShield = require("../Middleware/TokenSheild");
-const { get_products, create_product } = require("../Routers/Products.router");
+const { get_products, create_product, editproduct, deleteproduct, getselectedproduct } = require("../Routers/Products.router");
 
 const productsRouter = require("express").Router();
 

@@ -49,7 +49,9 @@ function create_product(req, res, next) {
       });
   }
   
+ 
+
   module.exports = {
    get_products,
-   create_product
+   create_product,
   };

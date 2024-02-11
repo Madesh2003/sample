@@ -18,6 +18,8 @@ import UpdateProduct from './pages/UpdateProduct';
 import ProductDetail from './pages/ProductDetail';
 import Signup from './pages/Signup';
 import Addproduct from './pages/Addproduct';
+import EventSchedular from './pages/EventSchedular';
+import ProductUpdate from './pages/UpdateProduct';
 
 
 const App = () => {
@@ -50,7 +52,9 @@ const App = () => {
       <Route path="/bar" element={<Categorychart />} />
       <Route path='/addproduct' element={<Addproduct />} />
       <Route path="/products" element={<Products />} />
-      <Route path="/productupdatation" element={<ProductDetail />} />
+      <Route path="/products/:productName/update" element={<ProductUpdate />} />
+      <Route path="/events" element={<EventSchedular />} />
+
     </>
   )}
     <Route element={<Notfound />} path='*' />

@@ -19,13 +19,12 @@ export default function TextInput({
       </label><br />
       <input
         type={type || "text"}
-        className="form-control mt-2"
+        className="block mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         id={id}
         name={name}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        onBlur={onBlur}
         min={0}
         required
       />
