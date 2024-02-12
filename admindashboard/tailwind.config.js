@@ -9,6 +9,9 @@ module.exports = {
       fontSize: {
         14: '14px',
       },
+      margin:{
+        68 :"205px",
+      },
       backgroundColor: {
          'main-bg': '#F4F7FE',
          'main-dark-bg': '#0b1437',

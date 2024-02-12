@@ -383,14 +383,19 @@ export default function AddProduct() {
                   value={formData.productName}
                   onChange={handleInputChange}
                 />
-                <TextInput
-                  label="Product Description"
-                  name="productDescription"
-                  type="text"
-                  placeholder="Enter Product Description"
-                  value={formData.productDescription}
-                  onChange={handleInputChange}
-                />
+                <div className="my-3">
+                     <label htmlFor="productDescription"
+                      className="font-semibold" >
+                        product Description
+                        </label><br />
+                      <textarea  
+                        id={formData.productDescription}
+                        name={formData.productDescription}
+                        value={formData.productDescription}
+                        onChange={handleInputChange}
+                        style={{fontWeight :"normal"}} 
+                        rows={4} cols={30} />
+                     </div>
                 <TextInput
                   label="Product BrandName"
                   name="brandName"

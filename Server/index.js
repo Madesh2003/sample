@@ -29,6 +29,9 @@ APP_SERVER.use('/event', require('./Controllers/EventController'))
 
 APP_SERVER.use('/api',require('./Controllers/ProductUpdatecontroller'))
 
+APP_SERVER.use('/soldproducts',require('./Controllers/Soldproducts.Controller'))
+
+
 
 APP_SERVER.all("/", (req, res, next) => {
     res.status(200).json({

@@ -132,7 +132,7 @@ export default function Products() {
                     onChange={handleSearch}
                   />
                 </div>
-                <NavLink to="/addproduct">
+                <NavLink to="/products/addproduct">
                   <button className="text-md font-medium h-10 flex items-center bg-brand-bg text-white dark:text-white rounded-md shadow-lg dark:bg-card-dark-bg p-4 ">
                     <IoMdAdd className="mr-2" />
                     Add Product
