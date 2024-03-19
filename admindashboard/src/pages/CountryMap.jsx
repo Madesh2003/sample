@@ -1,10 +1,11 @@
-import React,{ useEffect, useContext } from 'react';
-import { Navbar, Sidebar } from '../components';
-import { useStateContext } from '../contexts/ContextProvider'
+import React,{useEffect} from 'react';
+import { useStateContext } from '../contexts/ContextProvider';
+import { WorldMap } from './Charts/Geography';
+import Navbar  from '../components/Navbar';
+import Sidebar  from '../components/Sidebar';
 
 
-
-export default function SidebarNavbar() {
+export default function Countrymap() {
     const { setCurrentMode, currentMode, activeMenu } = useStateContext();
 
     useEffect(() => {
@@ -38,8 +39,18 @@ export default function SidebarNavbar() {
                  <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
                    <Navbar />
                  </div>
-                 </div>
-                 </div>
-                 </div>
+    <div className=" flex my-7 gap-10 flex-wrap justify-center max-sm:h-[800px] sm:h-[800px] items-center">
+            <div className="bg-white shadow-xl dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl">
+                <div className="flex justify-between">
+                    <p className="font-semibold text-xl capitalize">geography</p>
+                </div>
+                <div className="">
+                       <WorldMap />
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
   )
 }

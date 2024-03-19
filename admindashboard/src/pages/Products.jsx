@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import AspectRatio from "@mui/joy/AspectRatio";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import CardOverflow from "@mui/joy/CardOverflow";
@@ -8,14 +7,16 @@ import Typography from "@mui/joy/Typography";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { GrUpdate } from "react-icons/gr";
-import { MdDownloading } from "react-icons/md";
 import { ProductsContext } from "../contexts/Productcountcontext";
 import { useContext } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useStateContext } from "../contexts/ContextProvider";
-import { Navbar, Sidebar } from "../components";
 import { CardMedia } from "@mui/material";
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import Downloadbtn from "../components/Downloadbtn";
+import { MdViewTimeline } from "react-icons/md";
+import Navbar  from '../components/Navbar';
+import Sidebar  from '../components/Sidebar';
 
 export default function Products() {
   const { setCurrentMode, currentMode, activeMenu } = useStateContext();
@@ -32,18 +33,16 @@ export default function Products() {
   const { products, downloadProductsData } = useContext(ProductsContext);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(12);
+  const [productsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    // Filter products based on the search term
     const filtered = products.filter((product) =>
       product.productName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredProducts(filtered);
 
-    // Reset current page when searching
     setCurrentPage(1);
   }, [searchTerm, products]);
 
@@ -60,15 +59,13 @@ export default function Products() {
 
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-  // Define onChangePage function
   const onChangePage = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  // Generate an array of page numbers to display in the pagination bar
   const generatePageNumbers = () => {
     const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-    const maxPageNumbers = 5; // Maximum number of page numbers to display
+    const maxPageNumbers = 5000;
 
     if (totalPages <= maxPageNumbers) {
       return Array.from({ length: totalPages }, (_, index) => index + 1);
@@ -83,12 +80,23 @@ export default function Products() {
     );
   };
 
-  const handleupdate = (name, event) => {
+  const handleUpdate = (name, event) => {
     event.preventDefault();
     const filteredProduct = products.find((data) => data.productName === name);
     if (filteredProduct) {
       console.log("Filtered Product Name:", filteredProduct.productName);
       navigate(`/products/${filteredProduct.productName}/update`);
+    } else {
+      console.log("Error: Product not found");
+    }
+  };
+
+  const handleView = (name, event) => {
+    event.preventDefault();
+    const filteredProduct = products.find((data) => data.productName === name);
+    if (filteredProduct) {
+      console.log("Filtered Product Name:", filteredProduct.productName);
+      navigate(`/products/${filteredProduct.productName}/view`);
     } else {
       console.log("Error: Product not found");
     }
@@ -138,12 +146,7 @@ export default function Products() {
                     Add Product
                   </button>
                 </NavLink>
-                <button
-                  className="text-2xl h-14 text-brand-500 dark:text-white opacity-0.9 rounded-full bg-card-bg dark:bg-card-dark-bg p-4 hover:drop-shadow-xl"
-                  onClick={downloadProductsData}
-                >
-                  <MdDownloading />
-                </button>
+                <Downloadbtn func={downloadProductsData} />
               </div>
             </div>
 
@@ -159,22 +162,6 @@ export default function Products() {
                     className="shadow-4xl"
                     sx={{ width: 280, maxWidth: "100%", boxShadow: "xl" }}
                   >
-                    {/* <CardOverflow>
-                      <AspectRatio
-                        sx={{ minWidth: 200 }}
-                        className="p-2 object-cover w-full h-full"
-                      >
-                          {product.images.map((image, index) => (
-                            <img
-                              key={index}
-                              src={image}
-                              className="max-h-full max-w-full mx-auto"
-                              loading="lazy"
-                              alt={`Product ${index + 1}`}
-                            />
-                          ))}
-                      </AspectRatio>
-                    </CardOverflow> */}
                     {product.images.map((image, index) => (
                       <CardMedia
                         component="img"
@@ -190,7 +177,7 @@ export default function Products() {
                       <Typography level="body-xs">
                         {product.category}
                       </Typography>
-                      <p className="text-lg font-semibold tracking-wide">
+                      <p className="text-base font-semibold tracking-wide">
                         {product.productName}
                       </p>
                       {product.offeredPrice > 0 ? (
@@ -223,7 +210,7 @@ export default function Products() {
                         >
                           <div className="flex b items-baseline">
                             <FaIndianRupeeSign className=" inline-block text-sm" />
-                           <p>{product.productPrice}</p>
+                            <p>{product.productPrice}</p>
                           </div>
                         </Typography>
                       )}
@@ -241,16 +228,28 @@ export default function Products() {
                         left in stock!)
                       </Typography>
                     </CardContent>
-                    <CardOverflow>
-                      <button
-                        className="bg-brand-bg uppercase rounded-md flex flex-wrap items-center justify-center gap-3 text-white my-2 py-2 px-3 duration-500 hover:shadow-xl tracking-wider hover:bg-black"
-                        onClick={(event) =>
-                          handleupdate(product.productName, event)
-                        }
-                      >
-                        Update <GrUpdate className=" inline-block" />
-                      </button>
-                    </CardOverflow>
+                    <div className="flex justify-between items-center">
+                      <CardOverflow>
+                        <button
+                          className="bg-brand-bg font-medium uppercase rounded-md flex flex-wrap items-center justify-center gap-3 text-white my-2 py-2 px-3 duration-500 hover:shadow-xl tracking-wide hover:bg-black"
+                          onClick={(event) =>
+                            handleUpdate(product.productName, event)
+                          }
+                        >
+                          Update <GrUpdate className=" inline-block" />
+                        </button>
+                      </CardOverflow>
+                      <CardOverflow>
+                        <button
+                          className="bg-brand-bg font-medium uppercase rounded-md flex flex-wrap items-center justify-center gap-3 text-white my-2 py-2 px-3 duration-500 hover:shadow-xl tracking-wide hover:bg-black"
+                          onClick={(event) =>
+                            handleView(product.productName, event)
+                          }
+                        >
+                          View <MdViewTimeline className=" inline-block" />
+                        </button>
+                      </CardOverflow>
+                    </div>
                   </Card>
                 ))
               )}

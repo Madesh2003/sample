@@ -1,22 +1,23 @@
 import React, { useContext, useEffect } from 'react';
-import { BsCurrencyDollar, BsBoxSeam } from 'react-icons/bs';
+import { BsBoxSeam } from 'react-icons/bs';
 import { GoDot } from 'react-icons/go';
 import { Link } from 'react-router-dom'
 import { useStateContext } from '../contexts/ContextProvider';
 import { useSoldProducts } from '../contexts/revenuecontext';
-import { BiSolidNavigation } from "react-icons/bi";
-import { FaDownload } from 'react-icons/fa'
-import Barchart from './Charts/Bar';
 import { MdOutlineSupervisorAccount } from 'react-icons/md'
-import Topsellingproducts from '../components/Topsellingproduct';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { ProductsContext } from '../contexts/Productcountcontext';
-import { Area } from '../components';
-import { Navbar, Sidebar } from '../components';
+import Area from '../components/Charts/Area';
+import { useCustomerContext } from '../contexts/CustomerContext';
+import Downloadbtn from '../components/Downloadbtn';
+import { FaIndianRupeeSign } from 'react-icons/fa6';
+import Navbar  from '../components/Navbar';
+import Sidebar  from '../components/Sidebar';
+
 
 
 const Ecommerce = () => {
   const { setCurrentMode, currentMode, activeMenu } = useStateContext();
+
 
     useEffect(() => {
         const currentThemeColor = localStorage.getItem('colorMode');
@@ -28,6 +29,9 @@ const Ecommerce = () => {
 
   const { calculateTotalProducts, downloadProductsData } = useContext(ProductsContext);
   const { calculateTotalRevenue, downloadCSV, soldProducts } = useSoldProducts();
+  const { uniqueCustomerCount } = useCustomerContext();
+
+
   const currentYear = new Date().getFullYear();
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -55,21 +59,18 @@ const Ecommerce = () => {
                  </div>
     <div className="mt-24 mb-24">
       <div className="flex flex-wrap lg:flex-nowrap justify-center ">
-        <div className="bg-white shadow-2xl dark:text-gray-200 dark:bg-secondary-dark-bg h-40 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-no-repeat bg-cover bg-center">
-          <div className="flex justify-between items-cente">
-            <div>
+        <div className="bg-white shadow-2xl dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3">
+          <div className="flex justify-between items-center">
+            <div className='flex flex-col space-y-2'>
               <p className="font-bold text-gray-400">Earnings</p>
               <p className="text-2xl font-extrabold tracking-wide">&#8377; {calculateTotalRevenue()}</p>
-              <button onClick={downloadCSV} class=" shadow-[0px 0px 10px 1px rgba(69,4,253,1)] transition duration-700 border-0 text-md h-10 w-32 bg-brand-bg hover:bg-black text-white mt-2 px-3 rounded-md">
-                <span>Download</span>
-                <FaDownload class='inline-block animate-bounce text-md ml-2' />
-              </button>
+             <Downloadbtn func={downloadCSV}/>
             </div>
             <button
               type="button"
               className="text-2xl h-14 text-brand-500 dark:text-white opacity-0.9 rounded-full bg-card-bg dark:bg-card-dark-bg p-4 hover:drop-shadow-xl"
             >
-              <BsCurrencyDollar />
+             <FaIndianRupeeSign />
             </button>
 
           </div>
@@ -78,8 +79,8 @@ const Ecommerce = () => {
 
 
         <div className="flex my-7 flex-wrap justify-center gap-4 items-center">
-          <div className="flex flex-wrap gap-6  shadow-xl bg-white h-36 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl ">
-            <Link to="/customers">
+          <div className="flex flex-wrap gap-6 cursor-pointer  shadow-xl bg-white h-36 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl ">
+            <Link to="/customerdetails">
               <button
                 type="button"
                 className="text-2xl h-14 text-brand-500 dark:text-white opacity-0.9 rounded-full bg-card-bg dark:bg-card-dark-bg p-4 hover:drop-shadow-xl"
@@ -89,7 +90,7 @@ const Ecommerce = () => {
             </Link>
             <div>
               <p className="mt-3">
-                <span className="text-lg font-extrabold tracking-wide">38,354</span>
+                <span className="text-lg font-extrabold tracking-wide">{uniqueCustomerCount}</span>
               </p>
               <p className="text-sm font-semibold tracking-wide text-gray-500  mt-1">Customers</p>
             </div>
@@ -109,7 +110,6 @@ const Ecommerce = () => {
               </p>
               <p className="text-sm font-semibold tracking-wide text-gray-500  mt-1">Products</p>
             </div>
-           
           </div>
         </div>
       </div>
@@ -136,44 +136,6 @@ const Ecommerce = () => {
           <div className="mt-7">
             <div>
               <Area currentMode={currentMode} width="700px" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex justify-center my-10">
-        <div className='bg-white shadow-2xl flex flex-wrap gap-6 items-center dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl p-6'>
-          <div className=" border-r-1 border-black pr-6 md:w-500">
-            <div className="flex justify-between">
-              <p className="font-semibold text-xl">Products sold by Category</p>
-            </div>
-            <div className="mt-7">
-              <div>
-                <Barchart currentMode={currentMode} width="700px" height="560px" />
-              </div>
-            </div>
-          </div>
-
-          <div className='grid grid-flow-row justify-center content-between h-96'>
-            <div className="">
-              <p className="font-semibold text-xl">Top Selling Products</p>
-            </div>
-            <div className="md:w-500 mt-7">
-              <Topsellingproducts />
-            </div>
-            <div className='flex flex-wrap justify-end'>
-
-              <Link to='/Topsellingproducts'>
-                <TooltipComponent content='view full data' position='TopCenter'>
-                  <button
-                    type="button"
-                    className="text-2xl h-14 text-brand-500 dark:text-white opacity-0.9 rounded-full bg-card-bg dark:bg-card-dark-bg p-4 hover:drop-shadow-xl duration-500"
-                  >
-                    <BiSolidNavigation />
-                  </button>
-                </TooltipComponent>
-              </Link>
-
             </div>
           </div>
         </div>

@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
-import { Button, Navbar, Sidebar } from "../components";
+import Navbar  from '../components/Navbar';
+import Sidebar  from '../components/Sidebar';
 import TextInput2 from "../components/Elements/TextInput2";
 import { FiPlusCircle } from "react-icons/fi";
 import { FaSave, FaTrashAlt } from "react-icons/fa";
@@ -10,10 +11,9 @@ import Buttons from "../components/Buttons";
 import { MdDelete } from "react-icons/md";
 
 const ProductUpdate = () => {
-  const { productName } = useParams(); // Retrieve the product ID from URL parameters
+  const { productName } = useParams(); 
   const navigate = useNavigate();
 
-  // Define state variables to store product details and for edit form fields
   const [product, setProduct] = useState({});
 
   const { setCurrentMode, currentMode, activeMenu } = useStateContext();
@@ -46,7 +46,6 @@ const ProductUpdate = () => {
         const productData = response.data;
         setProduct(productData);
 
-        // Set editFields state with existing product details
         setEditFields({
           productName: productData.productName,
           brandName: productData.brandName,
@@ -86,7 +85,6 @@ const ProductUpdate = () => {
         }
       })
       .catch((error) => {
-        // Handle error response
         console.error("Error editing product:", error);
       });
   };
@@ -219,87 +217,79 @@ const ProductUpdate = () => {
                       </div>
                       <TextInput2
                         type="text"
-                        id={product.productName}
-                        name={product.productName}
+                        id="productName"
+                        name="productName"
                         label="product name"
                         value={editFields.productName}
                         onChange={handleFieldChange}
                       />
                      <div className="flex flex-wrap items-center my-3">
                      <label htmlFor="productDescription"
-                      className="font-semibold" >
+                      className="font-semibold mr-[505px]" >
                         product Description
                         </label>
                       <textarea  
-                        id={product.productDescription}
-                        name={product.productDescription}
+                        id="productDescription"
+                        name="productDescription"
                         value={editFields.productDescription}
                         onChange={handleFieldChange}
                         className="ml-68"
                         style={{fontWeight :"normal"}} 
                         rows={4} cols={30} />
                      </div>
-                      {/* <TextInput2
-                        type="text"
-                        label="product description"
-                        id={product.productDescription}
-                        name={product.productDescription}
-                        value={editFields.productDescription}
-                        onChange={handleFieldChange}
-                      /> */}
                       <TextInput2
                         type="text"
                         label="brand name"
-                        id={product.brandName}
-                        name={product.brandName}
+                        id="brandName"
+                        name="brandName"
                         value={editFields.brandName}
                         onChange={handleFieldChange}
                       />
                       <TextInput2
                         type="text"
                         label="category"
-                        id={product.category}
-                        name={product.category}
+                        id="category"
+                        name="category"
                         value={editFields.category}
                         onChange={handleFieldChange}
                       />
                       <TextInput2
                         type="text"
                         label="subcategory"
-                        id={product.subcategory}
-                        name={product.subcategory}
+                        id="subcategory"
+                        name="subcategory"
                         value={editFields.subcategory}
                         onChange={handleFieldChange}
                       />
                       <TextInput2
                         type="text"
                         label="stocks"
-                        id={product.stocks}
-                        name={product.stocks}
+                        id="stocks"
+                        name="stocks"
                         value={editFields.stocks}
                         onChange={handleFieldChange}
                       />
                       <TextInput2
                         type="text"
                         label="productPrice"
-                        id={product.productPrice}
-                        name={product.productPrice}
+                        id="productPrice"
+                        name="productPrice"
                         value={editFields.productPrice}
                         onChange={handleFieldChange}
                       />
                       <TextInput2
                         type="text"
                         label="offeredPrice"
-                        id={product.offeredPrice}
-                        name={product.offeredPrice}
+                        id="offeredPrice"
+                        name="offeredPrice"
                         value={editFields.offeredPrice}
                         onChange={handleFieldChange}
                       />
                       <TextInput2
                         type="text"
                         label="offerName"
-                        id={product.offerName}
-                        name={product.offerName}
+                        id="offerName"
+                        name="offerName"
                         value={editFields.offerName}
                         onChange={handleFieldChange}
                       />

@@ -16,7 +16,6 @@ export default function AuthContextProvider({ children }) {
   useEffect(() => {
     console.log(decodedToken, isExpired);
     if (isExpired) {
-      // Logout whne token expired
       setLoggedIn(false);
     }
     if (!isExpired && decodedToken) {

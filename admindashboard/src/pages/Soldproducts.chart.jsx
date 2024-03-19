@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import Areachartpage from './Charts/Areachartpage';
 import { GoDot } from 'react-icons/go';
 import { useStateContext } from '../contexts/ContextProvider';
-import { Navbar, Sidebar } from '../components';
-
+import Navbar  from '../components/Navbar';
+import Sidebar  from '../components/Sidebar';
 
 
 export default function Soldproductschart() {

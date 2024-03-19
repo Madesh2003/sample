@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import { Navbar, Sidebar } from './components';
-import { Ecommerce, Orders, Products, Customers } from './pages';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Ecommerce, Products } from './pages';
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
@@ -12,18 +10,20 @@ import Topsellingproductsgrid from './pages/Topsellingproducts';
 import Categorychart from './pages/Categorychart';
 import { AuthContext } from './contexts/AuthContext';
 import Login from './pages/Login';
-import ProductUpdatation from './pages/Productupdate';
-import Addproducts from './pages/Addproducts';
-import UpdateProduct from './pages/UpdateProduct';
-import ProductDetail from './pages/ProductDetail';
 import Signup from './pages/Signup';
-import Addproduct from './pages/Addproduct';
-import EventSchedular from './pages/EventSchedular';
 import ProductUpdate from './pages/UpdateProduct';
-
+import CustomerDetails from './pages/CustomerDetails';
+import AddProduct from './pages/Addproduct';
+import WorldMapChart from './pages/Charts/RaderChart';
+import Subcategory from './pages/Subcategory';
+import Order from './pages/Order';
+import Scheduler from './pages/Calendar';
+import Countrymap from './pages/CountryMap';
+import CustomerDetailsPage from './pages/CustomerDetailsPage';
+import ViewProduct from './pages/ViewProduct';
 
 const App = () => {
-  const { setCurrentMode, currentMode, activeMenu } = useStateContext();
+  const { setCurrentMode } = useStateContext();
   const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
@@ -36,30 +36,33 @@ const App = () => {
 
   return (
     <BrowserRouter>
-   <Routes>
-  {!isLoggedIn ? (
-    <>
-      <Route element={<Login />} path='/' />
-      <Route element={<Signup />} path='/signup' />
-    </>
-  ) : (
-    <>
-      <Route path="/dashboard" element={<Ecommerce />} />
-      <Route path="/topsellingproducts" element={<Topsellingproductsgrid />} />
-      <Route path="/orders" element={<Orders />} />
-      <Route path="/customers" element={<Customers />} />
-      <Route path="/area" element={<Soldproductschart />} />
-      <Route path="/bar" element={<Categorychart />} />
-      <Route path='/products/addproduct' element={<Addproduct />} />
-      <Route path="/products" element={<Products />} />
-      <Route path="/products/:productName/update" element={<ProductUpdate />} />
-      <Route path="/events" element={<EventSchedular />} />
-
-    </>
-  )}
-    <Route element={<Notfound />} path='*' />
-</Routes>
-
+      <Routes>
+        {isLoggedIn ? (
+          <>
+            <Route path="/dashboard" element={<Ecommerce />} />
+            <Route path="/topsellingproducts" element={<Topsellingproductsgrid />} />
+            <Route exact path="/customerdetails" element={<CustomerDetails />} />
+            <Route path="/customerdetails/customer/:customeremail" element={<CustomerDetailsPage />} />
+            <Route path="/area" element={<Soldproductschart />} />
+            <Route path="/bar" element={<Categorychart />} />
+            <Route path="/subcategory" element={<Subcategory />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/countries" element={<Countrymap />} />
+            <Route path="/events" element={<Scheduler />} />
+            <Route path="/products/addproduct" element={<AddProduct />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:productName/view" element={<ViewProduct />} /> 
+            <Route path="/products/:productName/update" element={<ProductUpdate />} />
+           
+            <Route path='*' element={<Notfound />} />
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </>
+        )}
+      </Routes>
     </BrowserRouter>
   );
 };

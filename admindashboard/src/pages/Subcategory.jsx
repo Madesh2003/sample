@@ -1,10 +1,10 @@
 import React,{ useEffect } from 'react';
-import Barchart from './Charts/Bar';
 import { useStateContext } from '../contexts/ContextProvider';
+import PieChart from './Charts/Pie';
 import Navbar  from '../components/Navbar';
 import Sidebar  from '../components/Sidebar';
 
-export default function Categorychart() {
+export default function Subcategory() {
     const { setCurrentMode, currentMode, activeMenu } = useStateContext();
 
     useEffect(() => {
@@ -41,12 +41,12 @@ export default function Categorychart() {
         <div className=" flex my-7 gap-10 flex-wrap justify-center">
             <div className="bg-white shadow-xl dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl md:w-780 ">
                 <div className="flex justify-between">
-                    <p className="font-semibold text-xl">Products sold by category</p>
-                   
+                    <p className="font-semibold text-xl">Products sold by Subcategory</p>
+                    
                 </div>
                 <div className="mt-7">
-                    <div>
-                        <Barchart />
+                    <div className='flex justify-center'>
+                        <PieChart />
                     </div>
                 </div>
             </div>

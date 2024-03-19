@@ -1,8 +1,8 @@
 import React,{useEffect} from 'react';
 import Topsellingproducts from '../components/Topselling';
 import { useStateContext } from '../contexts/ContextProvider';
-import { Navbar, Sidebar } from '../components';
-
+import Navbar  from '../components/Navbar';
+import Sidebar  from '../components/Sidebar';
 
 export default function Topsellingproductsgrid() {
     const { setCurrentMode, currentMode, activeMenu } = useStateContext();

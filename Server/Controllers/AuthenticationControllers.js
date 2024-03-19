@@ -52,13 +52,6 @@ AuthRouter.post("/create", (req, res, next) => {
  * Helps to signin user
  */
 AuthRouter.post("/signin", async (req, res, next) => {
-  /**
-   * Get the data from request object
-   * Check whether given email or phone number is available in the database
-   * If account is available then store the account data temporarily in the variable
-   * If user account is not in the database, then respond user accordingly
-   * Check for the password equality and response accordingly
-   */
   const { email, password } = req.body;
   console.log(req.body);
   let query = {};
@@ -69,12 +62,6 @@ AuthRouter.post("/signin", async (req, res, next) => {
     };
   }
 
-  // if (phoneNumber) {
-  //   query = {
-  //     ...query,
-  //     phoneNumber: phoneNumber,
-  //   };
-  // }
 
   try {
     const response = await AuthModel.findOne(query);
@@ -82,7 +69,7 @@ AuthRouter.post("/signin", async (req, res, next) => {
       bcrypt.compare(password, response.password).then(function (result) {
         if (result) {
           const token = jwt.sign({ role: ["customer"] }, secret, {
-            expiresIn: "1h",
+            expiresIn: "5h",
           });
           // GENERATE JWT TOKEN AND SEND IT IN RESPONSE BODY
           res.status(200).json({
@@ -111,10 +98,7 @@ AuthRouter.post("/signin", async (req, res, next) => {
   }
 });
 
-/**
- * METHOD - GET
- * Helps to list down all the users
- */
+
 AuthRouter.get("/list", (req, res, next) => {
   AuthModel.find()
     .then((response) => {

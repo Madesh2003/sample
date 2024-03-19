@@ -2,15 +2,9 @@ import React, { createContext, useContext, useState } from 'react';
 
 const StateContext = createContext();
 
-const initialState = {
-  userProfile: false,
-};
-
 export const ContextProvider = ({ children }) => {
   const [currentMode, setCurrentMode] = useState('Light');
-  const [themeSettings, setThemeSettings] = useState(false); 
   const [activeMenu, setActiveMenu] = useState(true);
-  const [isClicked, setIsClicked] = useState(initialState);
 
 
   const setMode = (e) => {
@@ -18,10 +12,9 @@ export const ContextProvider = ({ children }) => {
     localStorage.setItem('themeMode', e.target.value);
   };
 
-  const handleClick = (clicked) => setIsClicked({ ...initialState, [clicked]: true });
 
   return (
-    <StateContext.Provider value={{ currentMode, activeMenu, handleClick, isClicked, initialState, setIsClicked, setActiveMenu, setCurrentMode, setMode, themeSettings, setThemeSettings }}>
+    <StateContext.Provider value={{ currentMode, activeMenu, setActiveMenu, setCurrentMode }}>
       {children}
     </StateContext.Provider>
   );
